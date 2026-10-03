@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>حکم — بازی کارت</title>
+  <meta name="description" content="بازی حکم چهار نفره با هوش مصنوعی شمارش‌کارت — آفلاین و قابل نصب">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta name="theme-color" content="#0b1120" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#eef2f9" media="(prefers-color-scheme: light)">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- icon sprite (offline-safe, no CDN) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 7l4 4 5-7 5 7 4-4-2 12H5L3 7z" fill="currentColor"/></symbol>
+    <symbol id="i-robot" viewBox="0 0 24 24"><path d="M12 2v3M7 8h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2zM9 13h.01M15 13h.01M9 17h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 20c0-3 4-5 8-5s8 2 8 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 7h6M9 11h6" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-sound-on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-sound-off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l4 6M21 9l-4 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 2 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 4v6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M12 8v4l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-update" viewBox="0 0 24 24"><path d="M8 4h8M8 20h8M12 8v8M9 13l3 3 3-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0V4zM5 5h2M17 5h2M12 13v4M8 20h8M10 17h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  </defs></svg>
+
+  <!-- ============ START ============ -->
+  <section class="start-screen" id="startScreen">
+    <div class="start-card glass">
+      <div class="logo" aria-hidden="true">
+        <span class="s-spade">♠</span><span class="s-heart">♥</span><span class="s-diamond">♦</span><span class="s-club">♣</span>
+      </div>
+      <h1 class="start-title">حکم</h1>
+      <p class="start-subtitle">بازی چهار نفره · هوش مصنوعی شمارش‌کارت</p>
+      <p class="stats-line" id="statsLine"></p>
+      <div class="mode-toggles">
+        <label class="toggle"><input type="checkbox" id="toggleAnalysis"><span class="tk"></span>تحلیل دست</label>
+        <label class="toggle"><input type="checkbox" id="toggleCoach"><span class="tk"></span>حالت آموزشی</label>
+      </div>
+      <button class="btn neo primary" id="startBtn">شروع بازی</button>
+      <button class="btn neo secondary hidden" id="continueBtn">ادامهی بازی قبلی</button>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <main class="game-wrapper hidden" id="gameWrapper">
+    <header class="header glass">
+      <div class="title"><svg class="ic"><use href="#i-crown"/></svg><span>حکم</span></div>
+      <div class="scores">
+        <div class="score-box us">ما <b id="scoreA">0</b></div>
+        <div class="score-box them">آنها <b id="scoreB">0</b></div>
+      </div>
+    </header>
+
+    <div class="info-bar glass">
+      <div class="info-item"><svg class="ic"><use href="#i-hand"/></svg><span>دست <b id="trickNum">0</b>/13</span></div>
+      <div class="info-item icon-us"><svg class="ic"><use href="#i-user"/></svg><span>ما <b id="tricksA">0</b></span></div>
+      <div class="info-item icon-them"><svg class="ic"><use href="#i-robot"/></svg><span>آنها <b id="tricksB">0</b></span></div>
+      <div class="info-item icon-trump"><svg class="ic"><use href="#i-crown"/></svg><span>حکم <b id="trumpDisplay">-</b></span></div>
+    </div>
+
+    <div class="opponents-row">
+      <div class="opponent" id="player2Box">
+        <div class="opponent-avatar enemy"><svg class="ic"><use href="#i-robot"/></svg>
+          <span class="crown-badge hidden" id="crown2"><svg class="ic"><use href="#i-crown"/></svg></span>
+          <span class="trump-indicator hidden" id="trumpBadge2"></span>
+        </div>
+        <span class="opponent-name">حریف ۱</span>
+      </div>
+      <div class="opponent" id="player3Box">
+        <div class="opponent-avatar partner"><svg class="ic"><use href="#i-user"/></svg>
+          <span class="crown-badge hidden" id="crown3"><svg class="ic"><use href="#i-crown"/></svg></span>
+          <span class="trump-indicator hidden" id="trumpBadge3"></span>
+        </div>
+        <span class="opponent-name">یار شما</span>
+      </div>
+      <div class="opponent" id="player4Box">
+        <div class="opponent-avatar enemy"><svg class="ic"><use href="#i-robot"/></svg>
+          <span class="crown-badge hidden" id="crown4"><svg class="ic"><use href="#i-crown"/></svg></span>
+          <span class="trump-indicator hidden" id="trumpBadge4"></span>
+        </div>
+        <span class="opponent-name">حریف ۲</span>
+      </div>
+    </div>
+
+    <div class="play-area">
+      <div class="table neo">
+      <div class="card-slot top" id="slot3"></div>
+      <div class="card-slot left" id="slot2"></div>
+      <div class="card-slot right" id="slot4"></div>
+      <div class="card-slot bottom" id="slot1"></div>
+      </div>
+    </div>
+
+    <section class="player-section glass" id="player1Box">
+      <div class="player-info">
+        <div class="player-avatar"><svg class="ic"><use href="#i-user"/></svg>
+          <span class="crown-badge hidden" id="crown1"><svg class="ic"><use href="#i-crown"/></svg></span>
+          <span class="trump-indicator hidden" id="trumpBadge1"></span>
+        </div>
+        <span class="player-name">شما</span>
+      </div>
+      <div class="hand" id="handCards"></div>
+      <div class="coach-bar hidden" id="coachBar" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <div class="winner-popup" id="winnerPopup"></div>
+
+  <!-- ============ MODALS ============ -->
+  <div class="modal" id="trumpModal">
+    <div class="modal-box glass-strong">
+      <h2 class="modal-title"><svg class="ic"><use href="#i-crown"/></svg> انتخاب حکم</h2>
+      <p class="modal-note">۵ کارت اول:</p>
+      <div class="preview-cards" id="previewCards"></div>
+      <div class="trump-grid">
+        <button class="trump-btn neo suit-spades" data-trump="spades"><span class="pip">♠</span><span>پیک</span></button>
+        <button class="trump-btn neo suit-hearts" data-trump="hearts"><span class="pip">♥</span><span>دل</span></button>
+        <button class="trump-btn neo suit-diamonds" data-trump="diamonds"><span class="pip">♦</span><span>خشت</span></button>
+        <button class="trump-btn neo suit-clubs" data-trump="clubs"><span class="pip">♣</span><span>گشنیز</span></button>
+        <button class="trump-btn neo special" data-trump="ners"><span>(2) نرس</span></button>
+        <button class="trump-btn neo special" data-trump="asners"><span>(A2) آسنرس</span></button>
+        <button class="trump-btn neo special" data-trump="sers"><span>(A) سرس</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="roundModal">
+    <div class="modal-box glass-strong">
+      <h2 class="modal-title" id="roundTitle">پایان راند</h2>
+      <p class="modal-msg" id="roundMsg"></p>
+      <button class="btn neo primary" id="nextRoundBtn">راند بعدی</button>
+    </div>
+  </div>
+
+  <div class="modal" id="endModal">
+    <div class="modal-box glass-strong">
+      <h2 class="modal-title" id="endTitle">پایان</h2>
+      <p class="modal-msg big" id="endMsg"></p>
+      <div class="history-list hidden" id="historyList"></div>
+      <p class="stats-summary" id="statsSummary"></p>
+      <button class="btn neo primary" id="newGameBtn">بازی جدید</button>
+    </div>
+  </div>
+
+  <div class="modal" id="kotModal">
+    <div class="modal-box glass-strong">
+      <h2 class="modal-title"><svg class="ic"><use href="#i-trophy"/></svg> کت!</h2>
+      <p class="modal-msg" id="kotMsg"></p>
+      <p class="modal-msg">درخواست بام؟</p>
+      <div class="row">
+        <button class="btn neo primary" id="bamYes">بله، بام!</button>
+        <button class="btn neo secondary" id="bamNo">خیر</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="lastTrickModal">
+    <div class="modal-box glass-strong">
+      <h2 class="modal-title"><svg class="ic"><use href="#i-history"/></svg> دست قبلی و آنالیز</h2>
+      <div class="last-trick-list" id="lastTrickCards"></div>
+      <button class="btn neo secondary" id="closeLastTrick">بستن</button>
+    </div>
+  </div>
+
+  <button class="fab neo reset-fab" id="resetBtn" title="شروع دوباره" aria-label="شروع دوباره بازی"><svg class="ic"><use href="#i-reset"/></svg></button>
+  <button class="fab neo sound-fab" id="soundBtn" title="صدا" aria-label="روشن/خاموش کردن صدا"></button>
+  <button class="fab neo last-trick-fab hidden" id="lastTrickBtn" title="دست قبلی" aria-label="نمایش آخرین دست"><svg class="ic"><use href="#i-history"/></svg></button>
+  <button class="fab neo update-fab" id="updateBtn" title="نصب نسخه جدید" aria-label="بهروزرسانی برنامه"><svg class="ic"><use href="#i-update"/></svg></button>
+
+  <script src="src/vendor/lz-string.min.js"></script>
+  <script type="module" src="src/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and temp output
+*.log
+npm-debug.log*
+
+# Test / build artifacts
+coverage/
+.nyc_output/
+dist-temp/
+
+# Local tooling caches (graphify, editor)
+.graphify_*
+.kilo/
+
+# Editor backups
+*.swp
+*~
