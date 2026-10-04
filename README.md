@@ -1,76 +1,279 @@
-# Hokm Engine
+# 🃏 Hokm — بازی حکم
 
-موتور **قطعی و قابل بازپخش بازی حکم (Hokm)** با رابط کاربری مرورگر.
+**Hokm** یک بازی چهار نفره‌ی حکم ایرانی است؛ با رابط کاربری فارسی و راست‌به‌چپ، بازی تیمی، هوش مصنوعی، حالت‌های مختلف حکم و امکان اجرای کاملاً آفلاین.
 
-این پروژه یک بازی چهار نفره‌ی تیمی حکم است که در آن بازیکن در مقابل هوش مصنوعی مبتنی بر شمارش و تحلیل کارت‌ها بازی می‌کند. علاوه بر حالت کلاسیک حکم، سه حالت بدون حکم ایرانی **نرس / آس نرس / سرس** نیز پشتیبانی می‌شوند.
+در این بازی شما در یک تیم دو نفره قرار می‌گیرید و در مقابل دو بازیکن دیگر بازی می‌کنید. هدف، بردن Trickها و رسیدن به **۷ امتیاز** پیش از تیم مقابل است.
 
----
+بازی برای اجرای خود به سرور، حساب کاربری، اینترنت یا نصب برنامه نیاز ندارد.
 
-# 🇮🇷 مستندات فارسی
-
-## معرفی پروژه
-
-**Hokm Engine** یک موتور بازی حکم چهار نفره است که با هدف ایجاد یک هسته‌ی بازی **قطعی (Deterministic)، قابل آزمایش، قابل بازپخش و مستقل از رابط کاربری** طراحی شده است.
-
-بازی دارای دو تیم دو نفره است و هوش مصنوعی بر اساس اطلاعات قابل استنتاج از روند بازی، کارت‌های بازی‌شده، خالی بودن خال‌ها، وضعیت امتیاز و موقعیت بازیکن تصمیم‌گیری می‌کند.
-
-ویژگی اصلی پروژه این است که تصمیمات هوش مصنوعی به‌صورت تصادفی گرفته نمی‌شوند. برای یک وضعیت یکسان و یک Seed یکسان، نتیجه باید همیشه یکسان باشد.
-
-### ویژگی‌های اصلی
-
-* **قطعی (Deterministic)**
-  با Seed یکسان، بازی و تصمیمات AI به‌صورت یکسان و قابل بازپخش تولید می‌شوند.
-* **بدون تصادفی‌سازی پنهان**
-  مسیر تصمیم‌گیری AI از randomness مخفی استفاده نمی‌کند.
-* **اجرا در مرورگر**
-  رابط کاربری تک‌صفحه‌ای، RTL، واکنش‌گرا و مناسب موبایل و دسکتاپ است.
-* **کاملاً مستقل**
-  فایل `index.html` به‌تنهایی Runtime کامل بازی است.
-* **بدون CDN و Network Call**
-  اجرای بازی برای خود بازی به اینترنت یا سرویس خارجی وابسته نیست.
-* **بدون وابستگی Runtime خارجی**
-  فونت‌ها، CSS و JavaScript مورد نیاز Runtime داخل Bundle قرار گرفته‌اند.
-* **قابل اجرا با `file://`**
-  با دوبار کلیک روی `index.html` بازی اجرا می‌شود.
-* **قابل نصب به‌صورت PWA**
-  در صورت سرو شدن پروژه روی HTTP/HTTPS، Service Worker و PWA فعال می‌شوند.
-* **معماری ماژولار**
-  Engine از UI جداست و می‌تواند بدون مرورگر نیز اجرا و تست شود.
-* **تست‌های گسترده**
-  قوانین، AI، Determinism، Simulation، Storage، Bundle و UI بررسی شده‌اند.
-* **قابل بازپخش (Replayable)**
-  روند بازی شامل Deal، حکم، بازی کارت‌ها، برنده هر Trick، امتیاز و برنده نهایی قابل ثبت و بازسازی است.
-
----
-
-## اجرای پروژه
-
-ساده‌ترین روش:
+کافی است:
 
 ```text
 index.html
 ```
 
-فایل `index.html` را با هر مرورگر مدرن باز کنید.
+را با یک مرورگر مدرن باز کنید و بازی را شروع کنید.
 
-این فایل **کل Runtime پروژه** است و نصب دیگری برای اجرای خود بازی نیاز ندارد.
+---
 
-### اجرای مستقیم با `file://`
+# 🇮🇷 فارسی
 
-می‌توان `index.html` را مستقیماً با دوبار کلیک اجرا کرد.
+## 🎴 درباره بازی
 
-این حالت برای بازی کردن کاملاً کافی است.
+Hokm یک بازی چهار نفره‌ی تیمی است که در آن دو تیم دو نفره در مقابل یکدیگر بازی می‌کنند.
 
-تنها قابلیت‌هایی که به دلیل محدودیت امنیتی مرورگر روی `file://` در دسترس نیستند:
+بازیکن با یار خود یک تیم را تشکیل می‌دهد و دو بازیکن دیگر تیم مقابل هستند.
 
-* نصب PWA
-* Service Worker
+در هر Trick، هر چهار بازیکن یک کارت بازی می‌کنند و برنده Trick مشخص می‌شود.
 
-این محدودیت مربوط به امنیت مرورگر و Origin مربوط به `file://` است و Bug پروژه محسوب نمی‌شود.
+هر Trick یک امتیاز دارد و تیمی که زودتر به **۷ Trick** برسد، برنده بازی خواهد بود.
 
-### اجرای نسخه HTTP
+### ویژگی‌های بازی
 
-برای فعال شدن PWA و Service Worker:
+* 🎴 بازی چهار نفره‌ی تیمی
+* 🤖 حریف‌های هوش مصنوعی
+* 🏆 هدف بازی: رسیدن به ۷ Trick
+* 👑 انتخاب حکم
+* 🧠 AI مبتنی بر وضعیت واقعی بازی
+* 🎲 بازی‌های قابل تکرار با Seed
+* 📱 رابط کاربری مناسب موبایل
+* 💻 پشتیبانی از دسکتاپ
+* 🌙 حالت تاریک و روشن
+* 🇮🇷 رابط راست‌به‌چپ
+* 📡 قابلیت اجرای کاملاً آفلاین
+* 💾 ذخیره بازی در مرورگر
+* 💡 Advisor و راهنمای تصمیم‌گیری
+* 📱 قابلیت PWA در صورت اجرای بازی روی HTTP/HTTPS
+
+---
+
+## 🤖 هوش مصنوعی
+
+حریف‌های بازی به‌صورت تصادفی کارت بازی نمی‌کنند.
+
+هوش مصنوعی روند بازی را دنبال می‌کند و از اطلاعاتی که در طول بازی آشکار شده‌اند استفاده می‌کند.
+
+از جمله:
+
+* کارت‌های بازی‌شده
+* خال‌های خالی بازیکنان
+* کارت‌های باقی‌مانده
+* وضعیت Trick
+* امتیاز دو تیم
+* مرحله بازی
+* موقعیت بازیکن در Trick
+
+AI برای هر حرکت کارت‌های قانونی را بررسی کرده و بهترین گزینه را بر اساس منطق بازی انتخاب می‌کند.
+
+تصمیمات AI نیز تصادفی نیستند؛ بنابراین یک وضعیت یکسان با Seed یکسان می‌تواند دوباره همان نتیجه را تولید کند.
+
+---
+
+# 🏆 حالت‌های بازی
+
+بازی علاوه بر حکم کلاسیک، از سه حالت بدون حکم ایرانی نیز پشتیبانی می‌کند.
+
+### حکم کلاسیک
+
+حالت استاندارد حکم با یک خال حکم مشخص.
+
+### Ners
+
+یکی از حالت‌های بدون حکم ایرانی که در آن ترتیب قدرت کارت‌ها تغییر می‌کند.
+
+در این حالت:
+
+```text
+2
+```
+
+بالاترین کارت است.
+
+### Asners
+
+حالت بدون حکم دیگری با ترتیب متفاوت کارت‌ها.
+
+در این حالت:
+
+```text
+A
+```
+
+پایین‌ترین کارت است.
+
+### Sers
+
+یکی دیگر از حالت‌های بدون حکم ایرانی با قوانین مخصوص خود.
+
+---
+
+# 🎮 اجرای بازی
+
+ساده‌ترین روش اجرای بازی این است که فایل:
+
+```text
+index.html
+```
+
+را با یک مرورگر مدرن باز کنید.
+
+در Windows می‌توانید روی آن دوبار کلیک کنید.
+
+### بدون نصب
+
+برای بازی کردن نیازی به نصب موارد زیر نیست:
+
+* Node.js
+* npm package
+* PHP
+* Database
+* CDN
+* سرویس خارجی
+* حساب کاربری
+* اینترنت
+
+نسخه نهایی بازی تمام فایل‌های مورد نیاز Runtime را در خود دارد.
+
+---
+
+# 🌐 بازی آفلاین
+
+Hokm برای اجرای اصلی به اینترنت نیاز ندارد.
+
+CSS، JavaScript و فونت‌های مورد استفاده در نسخه نهایی داخل بازی قرار گرفته‌اند.
+
+بنابراین می‌توانید `index.html` را روی سیستم خود نگه دارید و حتی بدون اینترنت بازی کنید.
+
+---
+
+# 📱 موبایل و دسکتاپ
+
+رابط بازی برای موبایل و دسکتاپ طراحی شده است.
+
+ویژگی‌های رابط:
+
+* RTL
+* Responsive
+* Mobile-first
+* Dark / Light Theme
+* مناسب نمایشگرهای کوچک و بزرگ
+
+---
+
+# 🎲 Seed و Replay
+
+بازی از Seed پشتیبانی می‌کند.
+
+Seed می‌تواند روند بازی را قابل تکرار کند؛ از جمله:
+
+* Hakem
+* Deal
+* تصمیمات AI
+* روند کلی بازی
+
+برای مثال:
+
+```text
+?seed=7
+```
+
+می‌تواند یک بازی مشخص را دوباره ایجاد کند.
+
+این قابلیت برای Replay، بررسی بازی و آزمایش AI استفاده می‌شود.
+
+---
+
+# 💾 ذخیره بازی
+
+اطلاعات بازی می‌توانند در مرورگر ذخیره شوند.
+
+ذخیره‌سازی با:
+
+```text
+localStorage
+```
+
+انجام می‌شود و داده‌ها برای کاهش حجم با LZ-UTF16 فشرده می‌شوند.
+
+---
+
+# 💡 Advisor
+
+بازی دارای سیستم Advisor و Coach Hint نیز هست.
+
+Advisor می‌تواند وضعیت فعلی بازی را بررسی کرده و برای تصمیم‌گیری بازیکن پیشنهاد و تحلیل ارائه کند.
+
+تحلیل از اطلاعاتی استفاده می‌کند که بازیکن در همان لحظه بازی می‌توانسته در اختیار داشته باشد و از اطلاعات آینده بازی برای تقلب در تحلیل استفاده نمی‌کند.
+
+---
+
+# 🧪 وضعیت تست بازی
+
+نسخه فعلی با مجموعه‌ای از تست‌ها و شبیه‌سازی‌های خودکار بررسی شده است.
+
+نتیجه فعلی:
+
+```text
+103 passed
+0 failed
+8 skipped
+0 todo
+```
+
+همچنین:
+
+```text
+1000 بازی کامل شبیه‌سازی شد
+0 خطای منطقی
+
+4000+ حرکت قانونی بررسی شد
+0 حرکت غیرقانونی
+```
+
+تکرارپذیری نیز بررسی شده است:
+
+```text
+1000 تصمیم یکسان روی یک وضعیت ثابت
+10 Seed متفاوت با Replay یکسان
+```
+
+---
+
+# 🌐 تست اجرای واقعی در مرورگر
+
+یک بازی کامل در مرورگر به‌صورت خودکار اجرا شده است:
+
+```text
+Start
+↓
+Deal
+↓
+Trump
+↓
+Tricks
+↓
+Rounds
+↓
+Kot / Bam
+↓
+End
+```
+
+نتیجه:
+
+```text
+0 uncaught exceptions
+0 console.error
+0 failed asset loads
+```
+
+---
+
+# ⚙️ PWA
+
+اگر بازی روی HTTP یا HTTPS اجرا شود، قابلیت PWA و Service Worker نیز قابل استفاده هستند.
+
+اجرای محلی:
 
 ```bash
 node tools/serve.js
@@ -82,63 +285,28 @@ node tools/serve.js
 http://localhost:8642
 ```
 
-را باز کنید.
-
 ---
 
-# ساختار Repository
+# 📂 ساختار پروژه
 
 ```text
 index.html
-```
-
-Runtime نهایی و Release پروژه است. تمام CSS، فونت‌ها و JavaScript مورد نیاز داخل آن Bundle شده‌اند.
-
-```text
 index-dev.html
-```
 
-نسخه توسعه که `src/app.js` را به‌صورت ES Module بارگذاری می‌کند.
-
-```text
 manifest.json
-```
-
-Manifest مربوط به PWA با مسیرهای نسبی.
-
-```text
 sw.js
-```
 
-Service Worker برای حالت HTTP/HTTPS.
-
-```text
 favicon.ico
 icon-192.png
 icon-512.png
-```
 
-آیکون‌های پروژه.
-
-```text
 css/
   style.css
-```
 
-استایل کامل رابط کاربری شامل طراحی Glass / Neumorphic، حالت تاریک و روشن و Responsive Layout.
-
-```text
 fonts/
-  Vazirmatn + Lalezar woff2
-```
+  Vazirmatn
+  Lalezar
 
-فونت‌های محلی پروژه برای اجرای Offline.
-
----
-
-## Source Engine
-
-```text
 src/
   rules.js
   knowledge.js
@@ -151,80 +319,55 @@ src/
   storage.js
   advisor.js
   app.js
-  vendor/
-    lz-string.min.js
+
+tests/
+
+tools/
+  bundle.js
+  serve.js
 ```
 
-### `rules.js`
+`index.html` نسخه نهایی و قابل اجرای بازی است.
 
-هسته‌ی خالص قوانین بازی.
-
-مسئول:
-
-* محاسبات کارت
-* ارزش کارت‌ها
-* ترتیب Rank و Suit
-* تعیین برنده Trick
-* تشخیص کارت مجاز
-* قوانین وابسته به Mode
-
-این فایل هیچ وابستگی به DOM ندارد.
-
-ترتیب کارت‌ها نیز وابسته به حالت بازی است.
-
-برای مثال:
-
-* در `ners`، کارت 2 بالاترین کارت است.
-* در `asners`، آس پایین‌ترین کارت است.
+تمام CSS، JavaScript و فونت‌های مورد نیاز Runtime در آن Bundle شده‌اند.
 
 ---
 
-### `knowledge.js`
+# 🔧 جزئیات فنی
 
-حافظه و دانش قابل استنتاج AI.
+بخش فنی برای توسعه‌دهندگان پروژه است.
 
-اطلاعاتی مانند:
+### Engine
 
-* کارت‌های بازی‌شده
-* خال‌های خالی هر بازیکن
-* کارت‌های باقی‌مانده
-* دارندگان احتمالی هر خال
-* تاریخچه Trickها
+```text
+rules.js
+```
 
-را مدیریت می‌کند.
+قوانین پایه کارت‌ها و Trickها را مدیریت می‌کند.
 
----
+### Knowledge
 
-### `risk.js`
+```text
+knowledge.js
+```
 
-زمینه‌ی ریسک و وضعیت امتیاز را محاسبه می‌کند.
+کارت‌های بازی‌شده، خال‌های خالی و اطلاعات قابل استنتاج را نگهداری می‌کند.
 
-از جمله:
+### Decision
 
-* فاصله امتیازی
-* وضعیت Endgame
-* ریسک Kot
-* جلوگیری از تصمیمات نامناسب در وضعیت‌های حساس امتیازی
+```text
+decision.js
+```
 
----
+حرکت‌های قانونی را امتیازدهی کرده و بهترین حرکت را انتخاب می‌کند.
 
-### `decision.js`
+### Positions
 
-هسته‌ی تصمیم‌گیری AI.
+```text
+positions.js
+```
 
-برای هر کارت مجاز، یک امتیاز قطعی محاسبه می‌شود و بهترین گزینه با `argmax` انتخاب می‌شود.
-
-دلایل تصمیم نیز تولید می‌شوند تا تصمیم AI قابل مشاهده و تحلیل باشد.
-
-در صورت مساوی بودن امتیازها، Tie-breaking بر اساس یک قانون ثابت انجام می‌شود و از Randomness استفاده نمی‌شود.
-
----
-
-### `positions.js`
-
-سیاست تصمیم‌گیری را بر اساس موقعیت بازیکن در Trick اعمال می‌کند.
-
-چهار موقعیت:
+تصمیم AI را بر اساس موقعیت بازیکن در Trick تنظیم می‌کند:
 
 ```text
 LEADER
@@ -233,370 +376,60 @@ THIRD
 FOURTH
 ```
 
-را به‌صورت جداگانه مدیریت می‌کند.
-
----
-
-### `ai.js`
-
-رابط اصلی AI.
-
-شامل:
-
-* `aiPick`
-* انتخاب کارت
-* پیشنهاد / انتخاب حکم
-* اتصال اجزای Knowledge، Risk، Decision و Position Policy
-
-است.
-
-AI روی State بازی کار می‌کند و از DOM مستقل است.
-
----
-
-### `game.js`
-
-کنترل‌کننده اصلی چرخه بازی.
-
-مراحل اصلی:
+### AI
 
 ```text
-deal
-  ↓
-bid / trump
-  ↓
-trick
-  ↓
-kot / bam
-  ↓
-round
-  ↓
-game
-```
-
-این بخش قوانین بازی، قانونی بودن حرکت، جمع‌آوری Trick، امتیازدهی و پایان بازی را enforce می‌کند.
-
-بازی تا رسیدن یک تیم به 7 Trick ادامه پیدا می‌کند.
-
----
-
-### `simulate.js`
-
-اجرای بازی کامل بدون نیاز به UI.
-
-قابلیت‌ها:
-
-* شبیه‌سازی کامل Round
-* اجرای AI
-* بررسی Invariantها
-* بررسی حفظ کارت‌ها
-* بررسی قانونی بودن حرکت‌ها
-* بررسی Determinism
-
----
-
-### `storage.js`
-
-مدیریت ذخیره‌سازی مرورگر.
-
-از:
-
-```text
-localStorage
-```
-
-به همراه فشرده‌سازی:
-
-```text
-LZ-UTF16
-```
-
-استفاده می‌کند.
-
----
-
-### `advisor.js`
-
-سیستم Analysis و Coach Hint.
-
-از همان Engine اصلی استفاده می‌کند و تصمیمات را با نگاه آینده‌نگر و بدون استفاده از اطلاعاتی که در لحظه بازی در دسترس نبوده‌اند، تحلیل می‌کند.
-
----
-
-### `app.js`
-
-تنها ماژولی است که مستقیماً با DOM ارتباط دارد.
-
-مسئول:
-
-* Render
-* Input
-* تعامل کاربر
-* صدا
-* اتصال UI به Engine
-
-است.
-
----
-
-### `vendor/lz-string.min.js`
-
-نسخه Offline کتابخانه LZ-String برای فشرده‌سازی ذخیره‌های بازی.
-
----
-
-# Runtime در برابر Source
-
-یک اصل مهم پروژه:
-
-> `index.html` Runtime نهایی است و هنگام بازی هیچ فایل دیگری را نمی‌خواند.
-
-فایل‌های:
-
-```text
-src/
-css/
-fonts/
-index-dev.html
-```
-
-برای توسعه، خوانایی، تست و نگهداری پروژه در Repository قرار دارند.
-
-Runtime نهایی تمام وابستگی‌های مورد نیاز خود را داخل `index.html` دارد.
-
-بنابراین:
-
-```text
-index.html
-```
-
-به‌تنهایی برای اجرای بازی کافی است.
-
----
-
-# معماری Engine
-
-معماری پروژه به‌صورت Pipeline لایه‌ای طراحی شده است:
-
-```text
-rules.js
-    │
-    ▼
-knowledge.js
-    │
-    ▼
-risk.js
-    │
-    ▼
-decision.js
-    │
-    ▼
-positions.js
-    │
-    ▼
 ai.js
-    │
-    ▼
+```
+
+انتخاب کارت و تصمیمات مربوط به حکم را مدیریت می‌کند.
+
+### Game
+
+```text
 game.js
-    │
-    ├──────────────► app.js
-    │                  │
-    │                  ▼
-    │                 DOM
-    │
-    └──────────────► advisor.js
 ```
 
-### جریان مسئولیت‌ها
+چرخه کامل بازی را مدیریت می‌کند:
 
 ```text
-rules.js
-کارت و قوانین پایه
-        ↓
-knowledge.js
-دانش و حافظه بازی
-        ↓
-risk.js
-وضعیت امتیاز و ریسک
-        ↓
-decision.js
-امتیازدهی حرکات
-        ↓
-positions.js
-سیاست موقعیتی
-        ↓
-ai.js
-انتخاب نهایی
-        ↓
-game.js
-کنترل چرخه بازی
+Deal
+→ Trump
+→ Trick
+→ Kot / Bam
+→ Round
+→ Game
 ```
 
-این تفکیک باعث می‌شود Engine بدون UI نیز قابل اجرا باشد.
+### Simulation
+
+```text
+simulate.js
+```
+
+بازی‌های کامل را بدون رابط کاربری اجرا و Invariantها را بررسی می‌کند.
 
 ---
 
-# اصل Determinism
+# 🔁 Differential Verification
 
-یکی از اهداف اصلی پروژه این است که Engine رفتار قطعی داشته باشد.
-
-برای یک State یکسان:
+نسخه تاریخی:
 
 ```text
-State + Seed
+Hokm-main
 ```
 
-باید همیشه به نتیجه یکسان برسد.
+در Repository فعلی وجود ندارد.
 
-بنابراین:
-
-* تصمیمات AI تصادفی نیستند.
-* Tie-breaking ثابت است.
-* بازی قابل Replay است.
-* Simulation قابل تکرار است.
-* خطاها قابل بازتولید هستند.
-* تست‌های Regression قابل اعتمادتر هستند.
-
----
-
-# Verification
-
-وضعیت فعلی تست‌ها:
+به همین دلیل ۸ تست مربوط به مقایسه با نسخه تاریخی:
 
 ```text
-Tests:      103 passed
-            0 failed
-            8 skipped
-            0 todo
+SKIPPED
 ```
 
-تست‌ها بر اساس فایل:
+می‌شوند.
 
-```text
-positions       36
-engine          18
-simulate         9
-rules           12
-determinism      7
-observability    6
-game             5
-storage          4
-bundle           3
-app-smoke        2
-browser-smoke    1
-```
-
-هشت تست Skip شده، تست‌های Differential هستند که به Oracle تاریخی پروژه وابسته‌اند.
-
----
-
-# Simulation و Invariants
-
-تست Simulation:
-
-```text
-1000 full rounds simulated
-0 invariant violations
-```
-
-بیش از:
-
-```text
-4000+ legal plays checked
-0 illegal plays
-```
-
-بررسی شده‌اند.
-
-`simulate.js` در هر Round تابع `checkInvariants` را اجرا می‌کند و در صورت مشاهده هرگونه نقض، تست را Fail می‌کند.
-
-از جمله موارد بررسی‌شده:
-
-* حفظ تعداد کارت‌ها
-* بازی نشدن یک کارت بیش از یک بار
-* تعداد صحیح کارت‌های دست‌ها
-* قانونی بودن حرکت‌ها
-* وضعیت صحیح Trickها
-
-اصل Card Conservation نیز بررسی می‌شود:
-
-```text
-هر کارت دقیقاً یک بار وجود دارد.
-هیچ دستی بیش از 13 کارت ندارد.
-```
-
----
-
-# Determinism Verification
-
-Determinism با:
-
-```text
-1000× byte-identical decisions
-```
-
-روی یک State ثابت بررسی شده است.
-
-همچنین بازی‌های Seed شده با:
-
-```text
-10 distinct seeds
-```
-
-دوباره اجرا شده‌اند و Replay یکسان تأیید شده است.
-
----
-
-# Replay Verification
-
-Transcript بازی اطلاعات زیر را ثبت می‌کند:
-
-```text
-deal
-trump
-every play
-trick winner
-score
-final winner
-```
-
-بنابراین روند کامل بازی قابل بازسازی و بررسی است.
-
----
-
-# Bundle / Source Synchronization
-
-Bundle نهایی نیز بررسی شده است.
-
-تأیید شده که:
-
-```text
-index.html
-```
-
-Commit شده، از نظر بایت به بایتی با خروجی فعلی:
-
-```text
-tools/bundle.js
-```
-
-مطابقت دارد.
-
-در نتیجه Bundle قدیمی نمی‌تواند بدون شناسایی وارد Release شود.
-
-تست:
-
-```text
-tests/bundle.test.js
-```
-
-در صورت Out-of-sync بودن Runtime و Source شکست می‌خورد.
-
----
-
-# Differential Verification
-
-در حال حاضر Differential Verification کامل انجام نمی‌شود، زیرا Oracle تاریخی پروژه در محیط فعلی وجود ندارد.
+این تست‌ها به‌صورت جعلی Passed اعلام نشده‌اند.
 
 Oracle مورد انتظار:
 
@@ -606,329 +439,118 @@ Oracle مورد انتظار:
 
 است.
 
-وضعیت:
-
-```text
-8 differential tests skipped
-0 differential tests passed
-```
-
-این تست‌ها **Passed محسوب نمی‌شوند**.
-
-هیچ ادعایی مبنی بر Equivalence بین Engine فعلی و Oracle تاریخی مطرح نمی‌شود.
-
-فایل‌های زیر همچنان برای حفظ تاریخچه و امکان Verification آینده نگهداری می‌شوند:
-
-```text
-tests/equivalence.test.js
-tests/old-harness.js
-```
-
-اگر Repository قدیمی در کنار این پروژه قرار گیرد:
-
-```text
-../Hokm-main/index.html
-```
-
-تست‌های Differential به‌صورت خودکار فعال خواهند شد و Engine جدید را با Oracle قبلی مقایسه خواهند کرد.
-
-هیچ Oracle جعلی یا فایل ساختگی برای سبز کردن تست‌ها ایجاد نشده است.
+تا زمان بازگرداندن نسخه تاریخی، هیچ ادعایی مبنی بر برابری کامل با نسخه قبلی مطرح نمی‌شود.
 
 ---
 
-# Browser Test
+# 🛠️ توسعه
 
-تست Browser با Headless Chromium / Edge و DevTools Protocol انجام می‌شود.
-
-سناریوی کامل:
+برای توسعه از:
 
 ```text
-load
-  ↓
-new game
-  ↓
-deal
-  ↓
-trump picker
-  ↓
-tricks
-  ↓
-rounds
-  ↓
-kot handling
-  ↓
-end screen
-```
-
-نتیجه:
-
-```text
-0 uncaught exceptions
-0 console.error calls
-0 failed asset loads
-```
-
-تست روی:
-
-```text
-file://
-```
-
-نیز اجرا شده است.
-
----
-
-# Seeded Browser Test
-
-با استفاده از:
-
-```text
-?seed=N
-```
-
-می‌توان کل بازی را Pin کرد.
-
-Seed روی موارد زیر اثر تعیین‌کننده دارد:
-
-* Hakem
-* Deal
-* تصمیمات AI
-* روند بازی
-
-برای مثال:
-
-```text
-seed 7
-```
-
-بازیکن انسانی را Hakem قرار می‌دهد و بنابراین Modal انتخاب حکم نیز در تست Browser پوشش داده می‌شود.
-
-این Replay به یک پایان ثابت در بازه:
-
-```text
-6–7
-```
-
-می‌رسد.
-
-اگر مرورگر Chromium-family روی سیستم نصب نباشد، تست Browser به‌صورت Graceful Skip می‌شود و به‌عنوان Passed جعلی گزارش نمی‌شود.
-
----
-
-# Browser-Free Smoke Test
-
-علاوه بر Browser Smoke Test، یک تست بدون Browser نیز وجود دارد:
-
-```text
-tests/app-smoke.test.js
-```
-
-این تست Handlerهای DOM را داخل Node VM اجرا می‌کند.
-
-بنابراین حتی در محیطی که Chromium در دسترس نیست، Wiring مربوط به UI نیز بررسی می‌شود.
-
----
-
-# اجرای Test Suite
-
-برای اجرای کامل تست‌ها:
-
-```bash
-npm test
-```
-
-که معادل اجرای:
-
-```bash
-node --test tests/*.test.js
-```
-
-است.
-
----
-
-# Development
-
-پروژه عمداً دو Entry Point دارد.
-
-## Release Runtime
-
-```text
-index.html
-```
-
-این فایل Runtime نهایی است.
-
-بعد از تغییر در:
-
-```text
-src/
-css/
 index-dev.html
 ```
 
-باید Bundle مجدداً ساخته شود.
+استفاده می‌شود.
+
+بعد از تغییر Source:
 
 ```bash
 npm run bundle
 ```
 
-که در نهایت:
+نسخه نهایی `index.html` را مجدداً تولید می‌کند.
 
-```text
-tools/bundle.js
-```
-
-را اجرا کرده و `index.html` جدید تولید می‌کند.
-
----
-
-## Development Runtime
-
-```text
-index-dev.html
-```
-
-نسخه Modular برای توسعه است و ES Moduleها را از:
-
-```text
-src/app.js
-```
-
-بارگذاری می‌کند.
-
-از آنجا که ES Moduleها روی `file://` محدودیت مرورگر دارند، برای Development باید پروژه با HTTP سرو شود.
+برای اجرای Development Server:
 
 ```bash
 npm run serve
 ```
 
-سپس:
-
-```text
-http://localhost:8642
-```
-
 ---
 
-# وابستگی‌ها
+# 📦 وابستگی‌ها
 
-پروژه هیچ npm dependency خارجی ندارد.
+بازی برای Runtime هیچ npm dependency خارجی ندارد.
 
 ```text
 node_modules/
 ```
 
-در پروژه وجود ندارد.
+وجود ندارد.
 
-تنها نیاز:
+Node.js فقط برای ابزارهای تست، Bundle و Local Server مورد استفاده قرار می‌گیرد.
 
-```text
-Node.js
-```
-
-است.
-
-Node برای موارد زیر استفاده می‌شود:
-
-* Test Runner
-* Bundle Tool
-* Local HTTP Server
-
-خود بازی برای اجرا در Browser به نصب Package نیاز ندارد.
-
----
-
-# دستورات اصلی توسعه
-
-اجرای تست:
+دستورات اصلی:
 
 ```bash
 npm test
-```
-
-ساخت Bundle:
-
-```bash
 npm run bundle
-```
-
-اجرای Local Server:
-
-```bash
 npm run serve
 ```
 
 ---
 
-# Deploy روی GitHub Pages
+# 🚀 انتشار روی GitHub Pages
 
 برای انتشار:
 
-### 1. Repository را به GitHub Push کنید
-
-کل پروژه را در یک Repository قرار دهید.
-
-### 2. فعال‌سازی GitHub Pages
-
-در:
+1. پروژه را روی GitHub قرار دهید.
+2. به:
 
 ```text
 Settings → Pages
 ```
 
-گزینه:
+بروید.
+3. گزینه:
 
 ```text
 Deploy from a branch
 ```
 
 را انتخاب کنید.
-
-Branch:
+4. Branch را روی:
 
 ```text
 main
 ```
 
-و Folder:
+و Folder را روی:
 
 ```text
 /
 ```
 
-باشد.
+قرار دهید.
 
-### 3. آدرس انتشار
-
-GitHub Pages برنامه را در آدرسی مشابه زیر منتشر می‌کند:
+بازی در آدرسی مشابه زیر منتشر می‌شود:
 
 ```text
 https://<user>.github.io/<repo>/
 ```
 
-تمام مسیرهای پروژه Relative هستند.
-
-بنابراین این موارد در Subpath نیز باید درست کار کنند:
-
-```text
-manifest
-service worker
-icons
-assets
-```
-
-GitHub Pages نیز فشرده‌سازی gzip/brotli را به‌صورت خودکار انجام می‌دهد.
-
-Service Worker نیز Responseهای ارائه‌شده را Cache می‌کند.
+مسیرهای پروژه Relative هستند و در Subpath نیز کار می‌کنند.
 
 ---
 
-# License
+# 📌 نسخه
 
-در حال حاضر فایل License در Repository قرار نگرفته است.
+## Hokm v5.3
 
-بنابراین تا زمانی که License مشخصی اضافه نشود:
+نسخه **5.3** نسخه مرجع فعلی بازی است.
+
+نسخه‌های قبلی که روی GitHub Pages منتشر شده بودند به دلیل بسته‌شدن Page قبلی دیگر در دسترس نیستند.
+
+بنابراین این Repository و Release نسخه **v5.3** نقطه مرجع فعلی بازی محسوب می‌شوند.
+
+---
+
+# 📜 License
+
+در حال حاضر License جداگانه‌ای برای پروژه تعریف نشده است.
+
+تا زمان اضافه شدن License:
 
 ```text
 All rights reserved.
@@ -936,30 +558,118 @@ All rights reserved.
 
 ---
 
-# 🇬🇧 English Documentation
+# 🇬🇧 English
 
-## Hokm Engine
+# 🃏 Hokm — The Card Game
 
-A deterministic [Hokm](https://en.wikipedia.org/wiki/Hokm) card-game engine with a browser UI.
+**Hokm** is a four-player Iranian card game with team-based gameplay, AI opponents, multiple Hokm variants, a Persian RTL interface, and full offline play.
 
-Four-player partnership play against a card-counting AI, with three Iranian no-trump variants (`ners` / `asners` / `sers`) alongside classic trump play.
+You play as part of a two-player team against another two-player team.
 
-### Core properties
+The goal is simple:
 
-* **Deterministic** — the same seed replays byte-identically; zero hidden randomness in the decision path.
-* **Browser-based** — a single-page RTL app with dark/light themes and a mobile-first layout.
-* **Self-contained** — `index.html` is the complete runtime.
-* **No CDN or network calls required** for the game runtime.
-* **No external runtime dependency** — fonts, CSS, and JavaScript are bundled into the runtime.
-* **Runs directly from `file://`** by double-clicking `index.html`.
-* **PWA-capable** when served over HTTP/HTTPS.
-* **Headless-engine capable** — the engine can run without a browser UI.
-* **Replayable** — seeded games produce reproducible transcripts.
-* **Tested** across rules, AI, determinism, simulation, storage, bundle synchronization, and UI wiring.
+> Win tricks and reach **7 points** before the opposing team.
+
+The game does not require a server, account, internet connection, or installation.
+
+Just open:
+
+```text
+index.html
+```
+
+in a modern browser and start playing.
 
 ---
 
-## Run
+## 🎴 About the Game
+
+Hokm is a four-player partnership card game.
+
+Two players form your team and the other two players form the opposing team.
+
+Each trick consists of one card played by each player. The winning player takes the trick.
+
+Each trick counts as one point, and the first team to reach **7 tricks** wins the game.
+
+### Game Features
+
+* 🎴 Four-player partnership gameplay
+* 🤖 AI opponents
+* 🏆 First team to 7 tricks wins
+* 👑 Trump selection
+* 🧠 Game-aware AI decisions
+* 🎲 Seeded and replayable games
+* 📱 Mobile-friendly interface
+* 💻 Desktop support
+* 🌙 Dark and light themes
+* 🇮🇷 RTL interface
+* 📡 Full offline gameplay
+* 💾 Browser-based save data
+* 💡 Advisor and coaching hints
+* 📱 PWA support over HTTP/HTTPS
+
+---
+
+## 🤖 AI Opponents
+
+The AI does not simply play random cards.
+
+It follows the information revealed during the game, including:
+
+* Played cards
+* Void suits
+* Remaining cards
+* Current trick state
+* Team scores
+* Game phase
+* Player position within the trick
+
+For each legal move, the AI evaluates the available cards and selects a move according to the game's decision logic.
+
+AI decisions are deterministic rather than random, meaning the same state and seed can produce the same result again.
+
+---
+
+# 🏆 Game Modes
+
+In addition to classic Hokm, the game supports three Iranian no-trump variants.
+
+### Classic Hokm
+
+The traditional Hokm mode with a selected trump suit.
+
+### Ners
+
+An Iranian no-trump variant with a different card ranking.
+
+In this mode:
+
+```text
+2
+```
+
+is the highest card.
+
+### Asners
+
+Another no-trump variant with a different ranking.
+
+In this mode:
+
+```text
+A
+```
+
+is the lowest card.
+
+### Sers
+
+Another Iranian no-trump variant with its own card-ordering rules.
+
+---
+
+# 🎮 Running the Game
 
 Open:
 
@@ -967,24 +677,163 @@ Open:
 index.html
 ```
 
-in any modern browser.
+with a modern browser.
 
-That is the entire installation.
+On Windows, simply double-click the file.
 
-### `file://`
+### No Installation Required
 
-The game works by double-clicking `index.html`.
+You do not need:
 
-The only browser features unavailable on `file://` are:
+* Node.js
+* npm packages
+* PHP
+* a database
+* a CDN
+* an external service
+* an account
+* an internet connection
 
-* PWA installation
-* Service Worker
+The release bundle contains everything required by the game runtime.
 
-This is a browser security restriction for `file://` origins, not a project bug.
+---
 
-### HTTP / PWA
+# 🌐 Offline Gameplay
 
-For local PWA and Service Worker testing:
+The game does not require an internet connection for normal gameplay.
+
+CSS, JavaScript, and fonts required by the runtime are bundled locally.
+
+You can keep `index.html` on your computer and play completely offline.
+
+---
+
+# 📱 Mobile and Desktop
+
+The interface is designed for both mobile and desktop screens.
+
+It provides:
+
+* RTL layout
+* Responsive design
+* Mobile-first layout
+* Dark / Light themes
+* Small and large screen support
+
+---
+
+# 🎲 Seeds and Replay
+
+The game supports seeded runs.
+
+A seed can make the following reproducible:
+
+* Hakem
+* Deal
+* AI decisions
+* Game progression
+
+For example:
+
+```text
+?seed=7
+```
+
+can reproduce a specific game.
+
+This is useful for replay, debugging, AI evaluation, and testing.
+
+---
+
+# 💾 Save Data
+
+Game data can be stored in the browser using:
+
+```text
+localStorage
+```
+
+Data is compressed using LZ-UTF16 to reduce storage size.
+
+---
+
+# 💡 Advisor
+
+The game includes an Advisor and Coach Hint system.
+
+It can analyze the current game state and provide suggestions for the player's decision-making.
+
+The advisor uses information available at the current point in the game and does not use future information to cheat in its analysis.
+
+---
+
+# 🧪 Game Verification
+
+The current release has been tested through automated tests and full-game simulations.
+
+Current results:
+
+```text
+103 passed
+0 failed
+8 skipped
+0 todo
+```
+
+Additional simulation verification:
+
+```text
+1000 full games simulated
+0 invariant violations
+
+4000+ legal plays checked
+0 illegal plays
+```
+
+Determinism verification:
+
+```text
+1000 identical decisions on a fixed state
+10 different seeds replayed identically
+```
+
+---
+
+# 🌐 Browser Verification
+
+A complete game has also been played automatically through the browser:
+
+```text
+Start
+↓
+Deal
+↓
+Trump
+↓
+Tricks
+↓
+Rounds
+↓
+Kot / Bam
+↓
+End
+```
+
+Result:
+
+```text
+0 uncaught exceptions
+0 console.error calls
+0 failed asset loads
+```
+
+---
+
+# ⚙️ PWA
+
+When served over HTTP or HTTPS, the game can also use PWA and Service Worker features.
+
+Run locally:
 
 ```bash
 node tools/serve.js
@@ -998,129 +847,71 @@ http://localhost:8642
 
 ---
 
-## Repository layout
+# 📂 Project Structure
 
 ```text
-index.html               RELEASE RUNTIME — bundled app
-index-dev.html           modular development shell
-manifest.json            PWA manifest
-sw.js                    service worker
-favicon.ico              favicon
-icon-192.png             PWA icon
-icon-512.png             PWA icon
+index.html
+index-dev.html
+
+manifest.json
+sw.js
+
+favicon.ico
+icon-192.png
+icon-512.png
 
 css/
-  style.css              glass + neumorphic design
+  style.css
 
 fonts/
-  Vazirmatn + Lalezar     offline WOFF2 fonts
+  Vazirmatn
+  Lalezar
 
 src/
-  rules.js               pure engine: cards, ranks, trick winner
-  knowledge.js            played cards, voids, holders, trick history
-  risk.js                score gap, endgame, anti-kot
-  decision.js             deterministic move scoring + reasons
-  positions.js            per-position policies
-  ai.js                   AI move selection + trump bidding
-  game.js                 phase controller
-  simulate.js             deterministic simulation + invariants
-  storage.js              localStorage + LZ-UTF16 compression
-  advisor.js              analysis + coach hints
-  app.js                  DOM controller
-  vendor/lz-string.min.js offline compression library
+  rules.js
+  knowledge.js
+  risk.js
+  decision.js
+  positions.js
+  ai.js
+  game.js
+  simulate.js
+  storage.js
+  advisor.js
+  app.js
 
 tests/
-  node --test suite
 
 tools/
-  bundle.js               zero-dependency bundler
-  serve.js                zero-dependency local static server
+  bundle.js
+  serve.js
 ```
+
+`index.html` is the final playable release.
+
+All CSS, JavaScript, and fonts required by the runtime are bundled into it.
 
 ---
 
-## Runtime vs source
+# 🔧 Technical Details
 
-`index.html` is the shipped runtime.
+The following section is primarily for developers maintaining the game.
 
-It does not read any other project file during play.
+### Rules
 
-The following directories/files are maintained for development and readability:
+`rules.js` handles card rules, rankings, legal plays, and trick winners.
 
-```text
-src/
-css/
-fonts/
-index-dev.html
-```
+### Knowledge
 
-They are source material for the bundled runtime, not runtime dependencies.
+`knowledge.js` tracks played cards, void suits, remaining information, and trick history.
 
----
+### Decision
 
-## Architecture
+`decision.js` scores legal moves and selects the best deterministic move.
 
-The engine is organized as a layered pipeline:
+### Positions
 
-```text
-rules.js ──► knowledge.js ──► risk.js ──► decision.js ──► positions.js ──► ai.js
-   card math    memory of play    score context   move scoring    seat policy    choice
-                                                                        │
-                                                          game.js ◄──────┘
-                                                     phase controller
-                                                          │
-                                               app.js + advisor.js
-```
-
-### `rules.js`
-
-The pure rules core.
-
-It handles:
-
-* card values
-* rank/suit ordering
-* mode-aware ordering
-* trick winning
-* playable-card validation
-
-There is no DOM dependency.
-
-Mode-specific ordering is supported. For example:
-
-* under `ners`, 2 is highest;
-* under `asners`, ace is lowest.
-
-### `knowledge.js`
-
-Tracks information exposed by play:
-
-* played cards
-* void suits
-* remaining cards
-* likely suit holders
-* trick history
-
-### `risk.js`
-
-Models score context and risk:
-
-* score gap
-* endgame state
-* anti-kot behavior
-* score-sensitive decisions
-
-### `decision.js`
-
-Scores each legal candidate move using a deterministic argmax.
-
-It also emits human-readable decision reasons.
-
-Ties are resolved through a fixed rule and never through randomness.
-
-### `positions.js`
-
-Applies per-seat policy on top of the raw move score:
+`positions.js` adjusts AI decisions according to trick position:
 
 ```text
 LEADER
@@ -1129,194 +920,46 @@ THIRD
 FOURTH
 ```
 
-### `ai.js`
+### AI
 
-Provides the AI decision interface, including:
+`ai.js` handles card selection and trump-related decisions.
 
-* `aiPick`
-* card selection
-* trump bidding / selection
+### Game
 
-It is pure over game state and independent from the DOM.
-
-### `game.js`
-
-Controls the game state machine:
+`game.js` controls the complete game flow:
 
 ```text
-deal → bid/trump → trick → kot/bam → round → game
+Deal
+→ Trump
+→ Trick
+→ Kot / Bam
+→ Round
+→ Game
 ```
 
-It enforces legal play, trick collection, scoring, and game completion.
+### Simulation
 
-A game is won when a team reaches 7 tricks.
-
-### `simulate.js`
-
-Provides deterministic full-round simulation and invariant checking.
-
-### `storage.js`
-
-Provides browser persistence using:
-
-```text
-localStorage
-```
-
-with:
-
-```text
-LZ-UTF16
-```
-
-compression.
-
-### `advisor.js`
-
-Provides analysis and coach hints using the same engine without hindsight.
-
-### `app.js`
-
-The only module that directly touches the DOM.
-
-It handles:
-
-* rendering
-* input
-* UI interaction
-* sound
-* engine/UI integration
+`simulate.js` runs complete games without the browser UI and verifies game invariants.
 
 ---
 
-## Determinism
+# 🔁 Differential Verification
 
-The engine is designed so that:
-
-```text
-same state + same seed
-```
-
-produces the same result.
-
-There is no hidden randomness in the AI decision path.
-
-This makes the engine:
-
-* reproducible
-* testable
-* debuggable
-* replayable
-* suitable for regression testing
-
----
-
-## Verification
-
-Current test status:
+The historical:
 
 ```text
-Tests:      103 passed
-            0 failed
-            8 skipped
-            0 todo
+Hokm-main
 ```
 
-Per test file:
+version is not currently present in this repository.
+
+Therefore, the 8 tests that depend on the historical version are:
 
 ```text
-positions       36
-engine          18
-simulate         9
-rules           12
-determinism      7
-observability    6
-game             5
-storage          4
-bundle           3
-app-smoke        2
-browser-smoke    1
+SKIPPED
 ```
 
-The 8 skipped tests are differential tests gated on the historical oracle being absent.
-
----
-
-## Simulation and invariants
-
-```text
-1000 full rounds simulated
-0 invariant violations
-```
-
-More than:
-
-```text
-4000+ legal plays checked
-0 illegal plays
-```
-
-`simulate.js` runs `checkInvariants` on every simulated round and throws on violations.
-
-Card conservation is verified:
-
-```text
-every played card appears exactly once
-no hand exceeds 13 cards
-```
-
----
-
-## Determinism verification
-
-Verified:
-
-```text
-1000× byte-identical decisions on a fixed state
-```
-
-Seeded games also replay identically across:
-
-```text
-10 distinct seeds
-```
-
----
-
-## Replay verification
-
-Replay transcripts record:
-
-```text
-deal
-trump
-every play
-trick winner
-score
-final winner
-```
-
-This makes complete game playback and verification possible.
-
----
-
-## Bundle/source synchronization
-
-The committed `index.html` has been verified byte-identical to the output generated by:
-
-```text
-tools/bundle.js
-```
-
-from the current source tree.
-
-`tests/bundle.test.js` prevents a stale bundle from silently shipping.
-
----
-
-## Differential verification
-
-Differential verification is currently blocked because the historical Hokm-main oracle is not present in the repository/environment.
+They are not falsely reported as passed.
 
 Expected oracle:
 
@@ -1324,157 +967,39 @@ Expected oracle:
 ../Hokm-main/index.html
 ```
 
-Current status:
-
-```text
-8 differential tests skipped
-0 differential tests passed
-```
-
-No differential equivalence claim is made.
-
-The following files remain as verification history:
-
-```text
-tests/equivalence.test.js
-tests/old-harness.js
-```
-
-When the historical oracle is checked out next to this repository, the differential tests automatically become active and compare the current engine against it.
-
-No oracle file is fabricated to make tests pass.
+No claim of complete equivalence with the historical version is made until that oracle is available again.
 
 ---
 
-## Browser test
+# 🛠️ Development
 
-`tests/browser-smoke.test.js` loads `index.html` in headless Chromium/Edge over the DevTools Protocol and plays a full seeded game through the live DOM.
-
-Test flow:
+Use:
 
 ```text
-load
-→ new game
-→ deal
-→ trump picker
-→ tricks
-→ rounds
-→ kot handling
-→ end screen
-```
-
-Verified:
-
-```text
-0 uncaught exceptions
-0 console.error calls
-0 failed asset loads
-```
-
-The test runs over `file://`.
-
-If no Chromium-family browser is installed, the test skips gracefully rather than reporting a false pass.
-
----
-
-## Seeded browser test
-
-The complete game can be pinned with:
-
-```text
-?seed=N
-```
-
-The seed determines:
-
-* hakem
-* deal
-* AI decisions
-* game progression
-
-For example:
-
-```text
-seed 7
-```
-
-makes the human player the hakem, exercising the trump-picker modal.
-
-It replays to a fixed 6–7 finish.
-
----
-
-## Browser-free smoke test
-
-`tests/app-smoke.test.js` drives the same UI handlers inside a Node VM.
-
-This covers UI wiring even when Chromium is unavailable.
-
----
-
-## Development
-
-The project deliberately has two entry points.
-
-### Release runtime
-
-```text
-index.html
-```
-
-After modifying:
-
-```text
-src/
-css/
 index-dev.html
 ```
 
-rebuild:
+for modular development.
+
+After changing the source:
 
 ```bash
 npm run bundle
 ```
 
-This runs:
+rebuilds the final `index.html`.
 
-```text
-node tools/bundle.js
-```
-
-and regenerates `index.html`.
-
----
-
-### Development runtime
-
-```text
-index-dev.html
-```
-
-This is the modular development application and loads ES modules from:
-
-```text
-src/app.js
-```
-
-ES modules are restricted on `file://`, so use:
+For the development server:
 
 ```bash
 npm run serve
 ```
 
-Then:
-
-```text
-http://localhost:8642
-```
-
 ---
 
-## Dependencies
+# 📦 Dependencies
 
-The project has zero npm dependencies.
+The game has no external npm runtime dependencies.
 
 There is no:
 
@@ -1482,41 +1007,23 @@ There is no:
 node_modules/
 ```
 
-Only Node.js is required for:
+Node.js is only used for testing, bundling, and the local development server.
 
-* the built-in test runner
-* the bundler
-* the local static server
-
-The game itself requires no package installation.
-
----
-
-## Commands
-
-Run tests:
+Main commands:
 
 ```bash
 npm test
-```
-
-Build release bundle:
-
-```bash
 npm run bundle
-```
-
-Run local development server:
-
-```bash
 npm run serve
 ```
 
 ---
 
-## Deploy to GitHub Pages
+# 🚀 GitHub Pages
 
-1. Push the project folder to a GitHub repository.
+To publish the game:
+
+1. Push the project to a GitHub repository.
 2. Open:
 
 ```text
@@ -1535,22 +1042,34 @@ Deploy from a branch
 main / root
 ```
 
-The application will be available at:
+The game will be available at an address similar to:
 
 ```text
 https://<user>.github.io/<repo>/
 ```
 
-All paths are relative, so the manifest, service worker, icons, and other assets resolve correctly on project subpaths.
-
-GitHub Pages provides gzip/brotli compression automatically.
-
-The service worker caches responses as delivered.
+All project paths are relative and work correctly under a repository subpath.
 
 ---
 
-## Licensing
+# 📌 Version
 
-No license file is currently included.
+## Hokm v5.3
 
-All rights are reserved by default until an explicit license is added.
+**v5.3** is the current reference release of the game.
+
+Previous GitHub Pages versions became unavailable after the previous GitHub Page was closed.
+
+Therefore, this repository and the **v5.3 release** serve as the current reference point for the game.
+
+---
+
+# 📜 License
+
+No separate license is currently included.
+
+Until an explicit license is added:
+
+```text
+All rights reserved.
+```
